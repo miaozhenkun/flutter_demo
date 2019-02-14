@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:manhua/util/CommonUtils.dart';
 import 'package:manhua/util/redux/MkState.dart';
+import 'package:manhua/util/shared_preferences.dart';
 import 'package:manhua/views/TsPage.dart';
 import 'package:manhua/views/XsDetail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -76,9 +77,9 @@ class FirstPageState extends State<FirstPage> {
   //切换夜间模式
   void switchTheme(context, store) async{
     var list = ['白天', '夜间'];
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var sp = await SpUtil.getInstance();
     CommonUtils.showCommitOptionDialog(context, list, (index) {
-      prefs.setInt('theme',index+1 );
+      sp.putInt('theme', index+1);
       CommonUtils.pushTheme(store, index+1);
       //LocalStorage.save(Config.THEME_COLOR, index.toString());
     }, colorList: CommonUtils.getThemeListColor());

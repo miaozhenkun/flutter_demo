@@ -44,8 +44,7 @@ class CommonUtils {
     store.dispatch(new RefreshThemeDataAction(themeData));
   }
 
-  static getThemeData(int index){
-
+  static getThemeData(int index) {
     var ThemeData1 = ThemeData(
       brightness: Brightness.light,
       backgroundColor: Colors.cyan[200],
@@ -64,18 +63,6 @@ class CommonUtils {
           display2: TextStyle(fontSize: 13.0, color: Colors.grey),
           display3: TextStyle(fontSize: 23.0, color: Colors.black)),
     );
-    // if(index==0){
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   index=prefs.get('theme');
-    //   if(index==null){
-    //     return ThemeData1;
-    //   }
-    //   if(index==1){
-    //     return ThemeData1;
-    //   }else if(index==2){
-    //     return ThemeData2;
-    //   }
-    // }
     if(index==1){
       return ThemeData1;
     }else if(index==2){

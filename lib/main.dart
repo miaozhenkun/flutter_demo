@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:manhua/util/CommonUtils.dart';
 import 'package:manhua/util/redux/MkState.dart';
+import 'package:manhua/util/shared_preferences.dart';
 import 'package:manhua/views/DtDetail.dart';
 import 'package:manhua/views/LoginPage.dart';
 import 'package:manhua/views/TsPage.dart';
@@ -15,8 +16,12 @@ import './views/Detail.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'dart:async';
 
-void main() {
+SpUtil sp;
+void main() async{
   //debugPaintSizeEnabled = true;
+  sp = await SpUtil.getInstance();
+  //sp.get('theme');
+  print(sp.get('theme'));
   runApp(new FlutterReduxApp());
 }
 
@@ -25,7 +30,7 @@ class FlutterReduxApp extends StatelessWidget {
     appReducer,
     ///初始化数据
     initialState: new MkState(
-      themeData: CommonUtils.getThemeData(1),
+      themeData: CommonUtils.getThemeData(sp.get('theme')==null?1:sp.get('theme')),
     ),
   );
 

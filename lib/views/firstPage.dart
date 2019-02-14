@@ -6,7 +6,7 @@ import 'package:manhua/util/redux/MkState.dart';
 import 'package:manhua/util/shared_preferences.dart';
 import 'package:manhua/views/TsPage.dart';
 import 'package:manhua/views/XsDetail.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:manhua/views/videPage.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -50,6 +50,17 @@ class FirstPageState extends State<FirstPage> {
                 ),
                 new Divider(),
                 new ListTile(
+                  title: new Text('搞笑视频',
+                      style: new TextStyle(fontWeight: FontWeight.w500)),
+                  subtitle: new Text('视频'),
+                  leading: new Icon(
+                    Icons.contact_phone,
+                    color: Colors.blue[500],
+                  ),
+                  onTap: () => toVideoPage(),
+                ),
+                new Divider(),
+                new ListTile(
                   title: new Text('夜间模式点我',
                       style: new TextStyle(fontWeight: FontWeight.w500)),
                   subtitle: new Text('点我'),
@@ -72,6 +83,10 @@ class FirstPageState extends State<FirstPage> {
   void toXsPage() {
     Navigator.push(context,
         new MaterialPageRoute(builder: (context) => new XsDetailPage()));
+  }
+  void toVideoPage(){
+        Navigator.push(context,
+        new MaterialPageRoute(builder: (context) => new videoPage()));
   }
 
   //切换夜间模式

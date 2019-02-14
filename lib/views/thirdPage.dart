@@ -91,7 +91,6 @@ class GridViewState extends State with AutomaticKeepAliveClientMixin{
     print('请求了');
     HttpService.get(Constants.DtUrl, (res) {
       resultList = jsonDecode(res)['result'];
-      print(resultList);
       if (resultList.length > 0) {
         setState(() {
           channellist = resultList;

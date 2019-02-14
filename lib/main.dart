@@ -7,6 +7,8 @@ import 'package:manhua/views/DtDetail.dart';
 import 'package:manhua/views/LoginPage.dart';
 import 'package:manhua/views/TsPage.dart';
 import 'package:manhua/views/XsDetail.dart';
+import 'package:manhua/views/videPage.dart';
+import 'package:manhua/views/videoPlay.dart';
 import 'package:redux/redux.dart';
 import './views/firstPage.dart';
 import './views/secPage.dart';
@@ -54,9 +56,10 @@ class FlutterReduxApp extends StatelessWidget {
               '/loginpage': (BuildContext context) => new LoginPage(),
               '/detail': (BuildContext context) => new DetailPage(params: {}),
               '/xsdetail': (BuildContext context) => new XsDetailPage(),
-              '/dtdetail': (BuildContext context) =>
-                  new DtDetailPage(channelname: ''),
+              '/dtdetail': (BuildContext context) =>new DtDetailPage(channelname: ''),
               '/tspage': (BuildContext context) => new TsPage(),
+              '/videoPage': (BuildContext context) => new videoPage(), 
+              '/videoPlayPage': (BuildContext context) => new videoPlayPage(videoUrl:''),                             
             },
           );
         }));

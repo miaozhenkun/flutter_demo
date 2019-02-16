@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:manhua/http/Constants.dart';
 import 'package:manhua/http/HttpService.dart';
 import 'package:manhua/views/player_page.dart';
+import 'package:manhua/event/event_bus.dart';
 
 
 String coverArt = 'https://ws1.sinaimg.cn/large/0065oQSqgy1fwyf0wr8hhj30ie0nhq6p.jpg',
-    mp3Url = 'http://211.161.150.159/amobile.music.tc.qq.com/C4000049maM02t753u.m4a?guid=1935204060&vkey=B85E983981864D5E8875855324D924CAE632BBB30665ED7C823F1DCA8F9C0C9B7870CE33700CD09F45FE26BC72BA5E0C33EF63BFAA9FB00A&uin=8122&fromtag=66',
-    mp3Url1 = 'http://211.161.150.159/amobile.music.tc.qq.com/C4000049maM02t753u.m4a?guid=1935204060&vkey=B85E983981864D5E8875855324D924CAE632BBB30665ED7C823F1DCA8F9C0C9B7870CE33700CD09F45FE26BC72BA5E0C33EF63BFAA9FB00A&uin=8122&fromtag=66';
+    mp3Url = 'http://www.ytmp3.cn/down/58308.mp3',
+    mp3Url1 = 'http://www.ytmp3.cn/down/50102.mp3';
 final GlobalKey<PlayerState> musicPlayerKey = new GlobalKey();
 
 class DtDetailPage extends StatefulWidget {
@@ -61,21 +62,29 @@ class MusicState extends State with TickerProviderStateMixin{
                       ),
                     );
                   },
-                  onPrevious: () {},
-                  onNext: () {},
-                  onCompleted: () {
-                    coverArt = 'https://ws1.sinaimg.cn/large/0065oQSqgy1fy58bi1wlgj30sg10hguu.jpg';
+                  onPrevious: () {
+                    coverArt = 'https://ws1.sinaimg.cn/large/0065oQSqgy1fwyf0wr8hhj30ie0nhq6p.jpg';
                     mp3Url = mp3Url1;
+                    eventBus.fire(new ApplicationEvent('http://www.ytmp3.cn/down/58308.mp3'));
                     setState(() {
                          coverArt=coverArt;
-                         mp3Url = mp3Url;
                     });
-                    print('唱完了');
+                  },
+                  onNext: () {
+                    coverArt = 'https://ws1.sinaimg.cn/large/0065oQSqgy1fy58bi1wlgj30sg10hguu.jpg';
+                    mp3Url = mp3Url1;
+                    eventBus.fire(new ApplicationEvent(mp3Url));
+                    setState(() {
+                         coverArt=coverArt;
+                    });
+                  },
+                  onCompleted: () {
+                    print('播放完成');
                   },
                   onPlaying: (isPlaying) {
                     if (isPlaying) {
                       //controller_record.forward();
-                     // controller_needle.forward();
+                     //controller_needle.forward();
                     } else {
                      // controller_record.stop(canceled: false);
                       //controller_needle.reverse();

@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manhua/views/LoginPage.dart';
 
-
-
-
-
-
-
 abstract class ProfileModel {}
 
 class ProfileData extends ProfileModel {

@@ -1,6 +1,6 @@
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:manhua/event/event_bus.dart';
 
 class Player extends StatefulWidget {
   /// [AudioPlayer] 播放地址
@@ -52,7 +52,7 @@ class PlayerState extends State<Player> {
   AudioPlayer audioPlayer;
   bool isPlaying = false;
   bool isPause = false;
-  
+
   Duration duration;
   Duration position;
   double sliderValue;
@@ -60,6 +60,11 @@ class PlayerState extends State<Player> {
   @override
   void initState() {
     super.initState();
+    eventBus.on<ApplicationEvent>().listen((ApplicationEvent data) {
+      if (data != null) {
+        nextsong(data.mp3Url);
+      }
+    });
     print("audioUrl:" + widget.audioUrl);
     audioPlayer = new AudioPlayer();
     audioPlayer
@@ -85,6 +90,25 @@ class PlayerState extends State<Player> {
       });
   }
 
+  void nextsong(String val) {
+    print(val);
+    print(widget.audioUrl);
+    if (widget.audioUrl == val) {
+      return;
+    }
+    audioPlayer.stop();
+    audioPlayer.release();
+    setState(() {
+      isPlaying = false;
+      widget.onPlaying(isPlaying);
+    });
+    audioPlayer.play(val);
+        setState(() {
+      isPlaying = true;
+      widget.onPlaying(isPlaying);
+    });
+  }
+
   @override
   void deactivate() {
     super.deactivate();
@@ -100,7 +124,7 @@ class PlayerState extends State<Player> {
   String _formatDuration(Duration d) {
     int minute = d.inMinutes;
     int second = (d.inSeconds > 60) ? (d.inSeconds % 60) : d.inSeconds;
-    print(d.inMinutes.toString() + "======" + d.inSeconds.toString());
+    //print(d.inMinutes.toString() + "======" + d.inSeconds.toString());
     String format = ((minute < 10) ? "0$minute" : "$minute") +
         ":" +
         ((second < 10) ? "0$second" : "$second");
@@ -160,21 +184,20 @@ class PlayerState extends State<Player> {
             ),
             new IconButton(
               onPressed: () {
-                if (isPlaying){
-                 audioPlayer.pause();
-                 isPause = !isPause;
-                }
-                else {
-                  if(isPause) {
+                if (isPlaying) {
+                  audioPlayer.pause();
+                  isPause = !isPause;
+                } else {
+                  if (isPause) {
                     audioPlayer.resume();
                     isPause = !isPause;
-                  }else{
+                  } else {
                     audioPlayer.play(
-                    widget.audioUrl,
-                    isLocal: widget.isLocal,
-                    volume: widget.volume,
-                  );
-                  }                 
+                      widget.audioUrl,
+                      isLocal: widget.isLocal,
+                      volume: widget.volume,
+                    );
+                  }
                 }
                 setState(() {
                   isPlaying = !isPlaying;
@@ -203,7 +226,7 @@ class PlayerState extends State<Player> {
         onChanged: (newValue) {
           if (duration != null) {
             int seconds = (duration.inSeconds * newValue).round();
-            print("audioPlayer.seek: $seconds");
+            //print("audioPlayer.seek: $seconds");
             audioPlayer.seek(new Duration(seconds: seconds));
           }
         },

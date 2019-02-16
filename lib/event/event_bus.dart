@@ -1,5 +1,8 @@
 import 'package:event_bus/event_bus.dart';
 
+
+EventBus eventBus = new EventBus();
 class ApplicationEvent{
-  static EventBus event;
+  String mp3Url;
+  ApplicationEvent(this.mp3Url);
 }
